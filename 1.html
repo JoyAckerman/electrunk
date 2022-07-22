@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.min.js"></script>
+    <script src="echarts.js"></script>
+    <script>
+        $(function () {
+            var myChart = echarts.init(document.getElementById('main2'))
+            var option = {
+                title: {
+                    text: 'ECharts 入门示例'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['销量']
+                },
+                xAxis: {
+
+                    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+                },
+                yAxis: {},
+                series: [
+                    {
+                        name: '电流效率',
+                        type: 'bar',
+                        data: [5, 20, 36, 10, 10, 20]
+                    }
+                ]
+            };
+            $.ajax({
+                url: "http://localhost:3000/data", success: function (result) {
+                    console.log(result.x);
+                    console.log(result.y);
+                    option.series[0].data = result.x
+                    option.xAxis.data = result.y
+                    myChart.setOption(option);
+                    $("#wbdata").text = result.wb
+
+                }
+            });
+            // myChart.setOption(option);
+
+        })
+
+    </script>
+</head>
+
+<body>
+    <div id="main" style="width: 600px;height:400px;">电吸附现场分析电路图</div>
+    <div id="main2" style="width: 600px;height:400px;"></div>
+    <div id="wbdata"></div>
+</body>
+
+</html>
